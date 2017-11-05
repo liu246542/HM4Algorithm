@@ -5,25 +5,11 @@ import numpy as np
 import os
 import csv
 import matplotlib.pyplot as plt
+from genData import readCsv
+
 
 def logsig(x):
 	return 1/(1+np.exp(-x))
-
-def readCsv(filename):
-	dataList = []
-	with open(filename,'r') as f:
-		for sigLine in csv.reader(f):
-			dataList.append(sigLine)
-	if dataList[0][0] == 'label':
-		dataList.remove(dataList[0])
-		dataArr = np.array(dataList).astype(np.float)		
-		np.save('./dataset/label.npy',dataArr[:,0])
-		np.save('./dataset/trandata.npy',dataArr[:,1:])
-	else :
-		dataList.remove(dataList[0])
-		dataArr = np.array(dataList).astype(np.float)
-		np.save('./dataset/testdata.npy',dataArr)
-	
 
 if not(os.path.exists('./dataset/testdata.npy')):	
 	readCsv('./dataset/test.csv')
