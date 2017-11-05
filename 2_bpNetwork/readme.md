@@ -32,4 +32,3 @@ $ python3 test1.py
 $ python3 lab3_bp2.py
 $ python3 test2.py
 ```
-

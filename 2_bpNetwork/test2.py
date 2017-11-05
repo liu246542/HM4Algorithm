@@ -21,10 +21,10 @@ b2 = np.load('./network/b2.npy')
 dataInAll = np.load('./rawData/tdata.npy').astype(np.float)
 dataOuAll = np.load('./rawData/tlabel.npy').astype(np.int)
 dataReg = dataInAll.T/256
-showList = []
 
+outLength = len(dataOuAll)
 count = 0
-for j in range(len(dataOuAll)):
+for j in range(outLength):
 	dataIn = dataReg[:,j:j+1]
 	hiddenOut = logsig((np.dot(w1,dataIn).transpose() + b1.transpose() )).transpose()
 	networkOut = logsig((np.dot(w2,hiddenOut).transpose() + b2.transpose())).transpose()
@@ -33,4 +33,4 @@ for j in range(len(dataOuAll)):
 	outRes = outList.index(max(outList))
 	if(outRes == dataOuAll[j]):		count+=1
 
-print('正确数:{},总数:{}\n正确率:{}'.format(count,len(dataOuAll),count/len(dataOuAll)))
+print('正确数:{},总数:{}\n正确率:{}'.format(count,outLength,count/outLength))
