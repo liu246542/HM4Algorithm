@@ -31,10 +31,6 @@ for j in range(len(dataOuAll)):
 
 	outList = list(networkOut)
 	outRes = outList.index(max(outList))
-	showList.append(outRes)
 	if(outRes == dataOuAll[j]):		count+=1
 
-print(count)
-print(count/len(dataOuAll))
-# for index,item in enumerate(showList):
-# 	print('序号{:<2}：{:}:{}'.format(index,item,dataOuAll[index]))
+print('正确数:{},总数:{}\n正确率:{}'.format(count,len(dataOuAll),count/len(dataOuAll)))

@@ -15,3 +15,21 @@
 |`test1.py`|使用csv测试集测试生成的神经网络|
 |`lab3_bp2.py`|使用Mnist训练集生成bp神经网络|
 |`test2.py`|使用Mnist测试集测试生成的神经网络|
+
+#### 程序运行说明
+
+##### 使用csv数据集
+
+在运行之前需要把`test.csv`和`train.csv`两个文件复制到`dataset`文件夹
+
+```
+$ python3 lab3_bp1.py
+$ python3 test1.py
+```
+##### 使用Mnist原始数据
+
+```
+$ python3 lab3_bp2.py
+$ python3 test2.py
+```
+
