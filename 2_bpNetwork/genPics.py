@@ -23,5 +23,5 @@ def showPic(img,index):
 dataInAll = np.load('./dataset/testdata.npy').astype(np.float)
 
 # for j in range(28000):
-for j in range(1000):	
+for j in range(20):	
 	showPic(dataInAll[j].reshape(28,28),j)
