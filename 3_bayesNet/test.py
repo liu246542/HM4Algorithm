@@ -3,6 +3,7 @@
 
 import nltk
 import csv
+from functools import reduce
 
 # 文本处理函数
 # 训练函数
@@ -29,10 +30,9 @@ def constDict(listCont):
 	raw_words = splitWord(listCont)
 	for email in raw_words:
 		for word in email:
-			wordDict.setdefault(word.strip().lower(),[0.5,0.5]) # [好概率，坏概率]
+			wordDict.setdefault(word.strip().lower(),[0.5,0.5]) # [垃圾邮件概率，正常邮件概率]
 	# print(len(wordDict))
 	return wordDict
-
 
 # 计数
 def count_num(ema_word,sin_word):
@@ -54,6 +54,34 @@ def train(spaEmail,norEmail,wordDict):
 	return wordDict
 
 
+#-- 计算每个单词的条件概率
+#++ 计算每封邮件的概率
+def cotWordPro(ewords,wordDict):
+	pro_res = []
+	for sin_word in ewords:
+		[pws,pwn] = wordDict.get(sin_word,[0.4,0.4])
+		sin_res = 0 if (pws + pwn)==0 else pws+pwn
+		# pws/(pws + pwn)
+		pro_res.append(sin_res)
+	pro_res.sort(reverse = True)
+	pro_res = pro_res[0:15]
+	pro_mup = reduce(lambda x,y: x*y,pro_res)
+	ipr_res = list(map(lambda x: 1-x,pro_res))
+	ipr_mup = reduce(lambda x,y: x*y,ipr_res)
+	return (pro_mup / (pro_mup + ipr_mup))
+
+# 预测
+def predict(email_list,wordDict):
+	email_words = splitWord(email_list)
+	## 计算每个单词的概率
+	## 如果没有的话，就
+	th_value = 0.9
+	pre_res = []
+	for ewords in email_words:
+		con_res = 1 if cotWordPro(ewords,wordDict) > th_value else 0
+		pre_res.append(con_res)	
+	return pre_res
+
 
 if __name__ == '__main__':
 	data_file = csv.reader(open('data/assignment1_data.csv','r'))
@@ -66,11 +94,14 @@ if __name__ == '__main__':
 			spamEmail.append(item[0])
 
 	# print(constDict(normalEmail[0:2]))
-	# splitWord(spamEmail[0:2])	
-	wordDict = constDict(normalEmail[0:2])
-	wordDict = train(spamEmail[0:10],normalEmail[0:10],wordDict)
-	print(wordDict)
+	# splitWord(spamEmail[0:2])
+	wordDict = constDict(normalEmail[0:100] + spamEmail[0:100])
+	wordDict = train(normalEmail[0:100],normalEmail[0:100],wordDict)
+	pre_result = predict(spamEmail[101:200],wordDict)
+	print(len(pre_result))
+	print(pre_result.count(1))
+	print(pre_result.count(1) / len(pre_result))
+	# print(wordDict)
 
 #print(len(healEmail)) # 4360
 #print(len(spamEmail)) # 1368
-
