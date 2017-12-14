@@ -46,10 +46,13 @@ def train(spaEmail,norEmail,wordDict):
 	nor_Email = splitWord(norEmail)
 	len_smail = len(spa_Email)
 	len_nmail = len(nor_Email)
-	for sin_word in wordDict:
+	for sin_word in list(wordDict):
 		num_spa = count_num(spa_Email,sin_word)
 		num_nor = count_num(nor_Email,sin_word)
-		wordDict[sin_word] = [num_spa / len_smail, num_nor / len_nmail]
+		if ((num_spa + num_nor) > (len_smail + len_nmail)) or (num_spa + num_nor < 5):
+			wordDict.pop(sin_word)
+		else :
+			wordDict[sin_word] = [(num_spa + 1) / (num_spa + len_smail), (num_nor + 1) / (num_nor + len_nmail)]
 	return wordDict
 
 
@@ -59,7 +62,8 @@ def cotWordPro(ewords,wordDict):
 	pro_res = []
 	for sin_word in ewords:
 		[pws,pwn] = wordDict.get(sin_word,[0.4,0.4])
-		sin_res = 0 if (pws + pwn)==0 else pws+pwn
+		sin_res = pws + pwn
+		# sin_res = 0 if (pws + pwn)==0 else pws+pwn
 		# pws/(pws + pwn)
 		pro_res.append(sin_res)
 	pro_res.sort(reverse = True)
