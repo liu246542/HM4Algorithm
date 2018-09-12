@@ -1,19 +1,20 @@
-#coding=utf-8
 #!/usr/bin/python3
+#coding=utf-8
 import zuoye
 
 '''
-对负载平衡的排序贪婪算法的测试：
+Test for sorted greedy balance algorithm
 '''
-manum = 3#机器数量
-jobInd = [1,2,3,4,5,6,7]#任务序列
-jobTim = [1,2,3,4,5,6,7]#任务时间
+manum = 4
+jobInd = list(range(1,14))
+jobTim = [1]*12
+jobTim.append(4)
 
 [makespan,assigns,accumulators] = zuoye.sorted_balancd(manum,jobInd,jobTim)
 
-print('机器数量：' + str(manum) + '\r\n' + \
-	    '任务序列：' + str(jobInd) + '\r\n' + \
-	    '任务时间：' + str(jobTim) + '\r\n' + \
-	    '总时间：' + str(makespan) + '\r\n' + \
-	    '任务分配：' + str(assigns) + '\r\n' + \
-	    '每台机器的时间：' + str(accumulators))
+print('Machine number: ' + str(manum) + '\r\n' + \
+      'Job indecs: ' + str(jobInd) + '\r\n' + \
+      'Job time: ' + str(jobTim) + '\r\n' + \
+      'Total time: ' + str(makespan) + '\r\n' + \
+      'Assignment: ' + str(assigns) + '\r\n' + \
+      'Time for each machine: ' + str(accumulators))

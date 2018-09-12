@@ -1,27 +1,27 @@
-#conding=utf-8
 #!/usr/bin/python3
+#conding=utf-8
 import random
 
 ########################################################################
 '''
 Greedy Balance Algorithm for Loading Balancing Problem.
-输入：
-machine_num : 机器数量,int
-job_index   : 任务索引,list
-job_time    : 任务时间,list
+Input:
+machine_num : machine number,int
+job_index   : job index,list
+job_time    : job time,list
 
-输出：
-maskspan    : 总时间，int
-assigns     : 每台机器分配的任务，list
-accumulators: 每台机器花费的时间，list
+output:
+maskspan    : total time，int
+assigns     : jobs in each machine，list
+accumulators: time in each machine，list
 '''
 def greedy_balance(machine_num,job_index,job_time):
-	#初始化变量
+	# init
 	makespan = 0
 	assigns = [list() for i in range(machine_num)]
 	accumulators = [0] * machine_num
 
-	#对每一个任务分配机器
+	# assign each job to minimal load machine
 	for i in range(len(job_index)):
 		min_index = accumulators.index(min(accumulators))
 		assigns[min_index].append(job_index[i])
@@ -32,19 +32,19 @@ def greedy_balance(machine_num,job_index,job_time):
 ########################################################################
 '''
 Sorted Balance Algorithm for Loading Balancing Problem.
-输入：
-machine_num : 机器数量,int
-job_index   : 任务索引,list
-job_time    : 任务时间,list
+Input:
+machine_num : machine number, int
+job_index   : job index, list
+job_time    : job time, list
 
-输出：
-maskspan    : 总时间，int
-assigns     : 每台机器分配的任务，list
-accumulators: 每台机器花费的时间，list
+Output:
+maskspan    : total time, int
+assigns     : jobs in each machine, list
+accumulators: time in each machine, list
 '''
 def sorted_balancd(machine_num,job_index,job_time):
 	[job_index,job_time] = zip(*sorted(zip(job_index,job_time),key=lambda x:x[1], reverse=True))
-	makespan,assigns,accumulators = greedy_balance(machine_num,job_index,job_time);
+	makespan,assigns,accumulators = greedy_balance(machine_num,job_index,job_time)
 	return makespan,assigns,accumulators
 
 ########################################################################
