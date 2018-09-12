@@ -1,5 +1,5 @@
-#coding=utf-8
 #!/usr/bin/python3
+#coding=utf-8
 import zuoye
 import random
 import matplotlib.pyplot as plt
