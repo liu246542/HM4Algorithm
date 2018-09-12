@@ -7,8 +7,7 @@ Test for greedy balance algorithm：
 '''
 manum = 4
 jobInd = list(range(1,14))
-jobTim = [1]*12
-jobTim.append(4)
+jobTim = [1]*12 + [4]
 
 [makespan,assigns,accumulators] = zuoye.greedy_balance(manum,jobInd,jobTim)
 
